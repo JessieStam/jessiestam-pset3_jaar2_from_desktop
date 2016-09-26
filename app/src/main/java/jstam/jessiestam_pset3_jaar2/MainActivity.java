@@ -69,10 +69,10 @@ public class MainActivity extends AppCompatActivity {
         // move extras to SecondActivity
         searchTitle.putExtra("title", title_string);
 
+        startActivity(searchTitle);
+
         // clear the EditText
         title_input.getText().clear();
-
-        startActivity(searchTitle);
     }
 
     @Override

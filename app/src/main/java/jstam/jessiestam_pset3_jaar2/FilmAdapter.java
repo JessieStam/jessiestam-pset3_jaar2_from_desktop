@@ -63,7 +63,6 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
             super(itemView);
             myTextView = (TextView) itemView.findViewById(R.id.titles_row);
             myImageView = (ImageView) itemView.findViewById(R.id.poster_row);
-
         }
     }
 

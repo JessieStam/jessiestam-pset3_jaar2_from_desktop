@@ -19,11 +19,6 @@ import java.util.concurrent.ExecutionException;
 
 public class SecondActivity extends MainActivity{
 
-    // voor het laden van het plaatje:
-    // haal inputstream string uit httprequest gebeuren en :
-    // Bitmap mIcon1 = BitmapFactory.decodeStream(img_value.openConnection().getInputStream());
-    // userpicture.setImageBitmap(mIcon1).toBitmap;
-
     String title;
     String film_title;
     String film_year;
@@ -60,7 +55,6 @@ public class SecondActivity extends MainActivity{
 
         asyncTask.execute(title);
     }
-
 
     public void setData(ArrayList<String> data_list) {
 

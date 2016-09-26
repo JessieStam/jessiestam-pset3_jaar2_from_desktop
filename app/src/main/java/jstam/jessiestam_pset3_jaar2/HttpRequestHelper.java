@@ -35,7 +35,7 @@ public class HttpRequestHelper {
 
         // complete URL string and turn into URL
         //String complete_URL_string = url1 + film_title + url2;
-        String complete_URL_string = url1 + "twilight" + url2;
+        String complete_URL_string = url1 + params.toString() + url2;
         URL complete_URL = null;
 
         try {
