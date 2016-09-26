@@ -1,17 +1,14 @@
 package jstam.jessiestam_pset3_jaar2;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.Serializable;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Jessie on 22/09/2016.
@@ -54,34 +51,51 @@ public class SecondActivity extends MainActivity{
         TitleAsyncTask asyncTask = new TitleAsyncTask(this);
 
         asyncTask.execute(title);
+
     }
 
     public void setData(ArrayList<String> data_list) {
 
-        // get title and print to screen
-        film_title = data_list.get(0);
-        print_title.setText(film_title);
+        View button = findViewById(R.id.add_remove_button);
 
-        film_year = data_list.get(1);
-        print_year.setText(film_year);
+        if (data_list.size() == 0) {
+            button.setVisibility(View.INVISIBLE);
+        }
+        else {
+            button.setVisibility(View.VISIBLE);
 
-        // get director and print to screen
-        film_director = data_list.get(2);
-        print_director.setText(film_director);
+            // get title and print to screen
+            film_title = data_list.get(0);
+            print_title.setText(film_title);
 
-        // get actors and print to screen
-        film_actors = data_list.get(3);
-        print_actors.setText(film_actors);
+            film_year = data_list.get(1);
+            print_year.setText(film_year);
 
-        // get summary and print to screen
-        film_summary = data_list.get(4);
-        print_summary.setText(film_summary);
+            // get director and print to screen
+            film_director = data_list.get(2);
+            print_director.setText(film_director);
 
-        //create poster
-        film_poster = data_list.get(5);
-        Bitmap poster = BitmapFactory.decodeFile(film_poster);
+            // get actors and print to screen
+            film_actors = data_list.get(3);
+            print_actors.setText(film_actors);
 
-        print_poster.setImageBitmap(poster);
+            // get summary and print to screen
+            film_summary = data_list.get(4);
+            print_summary.setText(film_summary);
+
+            //create poster
+            film_poster = data_list.get(5);
+
+            // print_poster.setImageBitmap(HttpRequestHelper.getPoster(film_poster));
+
+            //Bitmap poster = BitmapFactory.decodeFile(film_poster);
+
+            //picasso.with(film_poster).load(poster).into(print_poster);
+
+            Picasso.with(this).load(film_poster).into(print_poster);
+
+            //print_poster.setImageBitmap(poster);
+        }
     }
 
     public void addRemove(View view) {
@@ -95,5 +109,7 @@ public class SecondActivity extends MainActivity{
         addRemove.putExtra("poster", film_poster);
 
         startActivity(addRemove);
+
+        finish();
     }
 }

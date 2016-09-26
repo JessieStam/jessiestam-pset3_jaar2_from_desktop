@@ -2,15 +2,11 @@ package jstam.jessiestam_pset3_jaar2;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Jessie on 22/09/2016.
@@ -78,6 +74,10 @@ public class TitleAsyncTask extends AsyncTask<String, Integer, String> {
                 }
                 catch (Exception e) {
                     e.printStackTrace();
+                }
+
+                if (data_list.size() == 0) {
+                    Toast.makeText(context, "but your film was not...", Toast.LENGTH_SHORT).show();
                 }
 
                 this.secondActivity.setData(data_list);

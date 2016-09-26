@@ -1,9 +1,6 @@
 package jstam.jessiestam_pset3_jaar2;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
-import android.widget.ImageView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,13 +26,15 @@ public class HttpRequestHelper {
 
         // create result String
         String result = "";
-        String film_title = params[0];
+        String film = params[0];
+
+        String film_title = film.replaceAll(" ", "+");
 
         Log.d("findproblem3", film_title);
 
         // complete URL string and turn into URL
         //String complete_URL_string = url1 + film_title + url2;
-        String complete_URL_string = url1 + "frozen" + url2;
+        String complete_URL_string = url1 + film_title + url2;
         URL complete_URL = null;
 
         try {
