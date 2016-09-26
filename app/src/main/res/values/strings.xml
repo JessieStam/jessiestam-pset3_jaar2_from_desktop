@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">jessiestam-pset3_jaar2</string>
+    <string name="app_title">Watch List</string>
+    <string name="app_instruction">Search for movies you still HAVE to watch and add them to your list, so you never forget what to watch again!</string>
+    <string name="search_button">SEARCH</string>
+    <string name="search_item_title">- title goes here -</string>
+    <string name="actors_string">- actors -</string>
+    <string name="director_string">- director -</string>
+    <string name="year_string">- year -</string>
+    <string name="summary_string">- summary goes here -</string>
+    <string name="poster_art_key">f8b232b0</string>
+    <string name="add_remove_button">ADD TO LIST</string>
+    <string name="search_film_hint">enter a film title</string>
+</resources>
