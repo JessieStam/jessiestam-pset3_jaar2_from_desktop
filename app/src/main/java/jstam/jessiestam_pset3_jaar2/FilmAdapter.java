@@ -22,20 +22,15 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
     //krijgt data mee (title, poster)
 
     private String currentColor;
-    //MainActivity mainActivity;
 
-
-    ArrayList<ArrayList> titles_posters;
+    //ArrayList<ArrayList> titles_posters;
     ArrayList<String> titles;
     ArrayList<String> posters;
-    Context context;
 
-    public FilmAdapter(Context context, ArrayList<ArrayList> titles_posters) {
-        this.titles_posters = titles_posters;
+    public FilmAdapter(ArrayList<String> titles, ArrayList<String> posters) {
 
-        titles = titles_posters.get(0);
-        posters = titles_posters.get(1);
-        this.context = context;
+        this.titles = titles;
+        this.posters = posters;
     }
 
     View.OnClickListener listener = new View.OnClickListener() {
@@ -61,9 +56,6 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private int[] posters;
-        private String[] titles;
-
         public TextView myTextView;
         ImageView myImageView;
 
@@ -76,7 +68,7 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
     }
 
     @Override
-    public FilmAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int i) {
+    public FilmAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
@@ -84,11 +76,11 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(FilmAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(ViewHolder viewHolder, int position) {
 
-        viewHolder.myTextView.setText(titles.get(i));
+        viewHolder.myTextView.setText(titles.get(position));
 
-        Bitmap poster = BitmapFactory.decodeFile(posters.get(i));
+        Bitmap poster = BitmapFactory.decodeFile(posters.get(position));
         viewHolder.myImageView.setImageBitmap(poster);
 
         viewHolder.itemView.setOnClickListener(listener);

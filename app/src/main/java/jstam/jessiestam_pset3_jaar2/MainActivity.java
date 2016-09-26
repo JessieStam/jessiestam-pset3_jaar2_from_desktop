@@ -22,46 +22,42 @@ public class MainActivity extends AppCompatActivity {
     String title;
     String poster;
 
-
-    ArrayList<ArrayList> titles_posters;
     ArrayList<String> titles;
     ArrayList<String> posters;
-
-//    String[] titles;
-//    String[] posters;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        moviesList = (RecyclerView) findViewById(R.id.movies_list);
+
         if (savedInstanceState == null) {
 
             title_input = (EditText) findViewById(R.id.user_search_input);
             title_string = title_input.getText().toString();
 
-            moviesList = (RecyclerView) findViewById(R.id.movies_list);
-
         }
         else {
+
+            // use a linear layout manager
+            LinearLayoutManager manager = new LinearLayoutManager(this);
+            moviesList.setLayoutManager(manager);
+
+            // specify an adapter (see also next example)
+            FilmAdapter adapter = new FilmAdapter(titles, posters);
+            moviesList.setAdapter(adapter);
 
             Bundle extras = getIntent().getExtras();
             title = extras.getString("title");
             poster = extras.getString("poster");
 
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            FilmAdapter adapter = new FilmAdapter(this, titles_posters);
-
-            moviesList.setLayoutManager(layoutManager);
-            moviesList.setAdapter(adapter);
+//            moviesList.setLayoutManager(layoutManager);
+//            moviesList.setAdapter(adapter);
 
             // add title and poster from second activity to list
             posters.add(poster);
             titles.add(title);
-
-            titles_posters = null;
-            titles_posters.add(titles);
-            titles_posters.add(posters);
         }
     }
 
@@ -79,22 +75,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(searchTitle);
     }
 
-    // maak nog een ding om die items aan te klikken en van kleur te veranderen ohnee dit gebeurt
-    // in de adapter maar je moet die dan wel aanroepen
-
-    public void addToRecyclerView(View listview) {
-
-
-
-    }
-
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        // save story object
-        //outState.putSerializable("story", story);
+        // save lists object
+        outState.putStringArrayList("titles", titles);
+        outState.putStringArrayList("posters", posters);
     }
 
     @Override
@@ -103,5 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
         // restore story object
         //story = (Story) savedInstanceState.getSerializable("story");
+        titles = savedInstanceState.getStringArrayList("titles");
+        posters = savedInstanceState.getStringArrayList("posters");
     }
 }
