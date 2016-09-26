@@ -36,14 +36,6 @@ public class MainActivity extends AppCompatActivity {
         titles = new ArrayList<>();
         posters = new ArrayList<>();
 
-        // use a linear layout manager
-        manager = new LinearLayoutManager(this);
-        moviesList.setLayoutManager(manager);
-
-        // specify an adapter (see also next example)
-        adapter = new FilmAdapter(titles, posters);
-        moviesList.setAdapter(adapter);
-
         if (savedInstanceState == null) {
 
             title_input = (EditText) findViewById(R.id.user_search_input);
@@ -64,6 +56,14 @@ public class MainActivity extends AppCompatActivity {
 //                titles.add(title);
 //            }
         }
+
+        // use a linear layout manager
+        manager = new LinearLayoutManager(this);
+        moviesList.setLayoutManager(manager);
+
+        // specify an adapter (see also next example)
+        adapter = new FilmAdapter(titles, posters);
+        moviesList.setAdapter(adapter);
 
         editRecyclerView();
     }

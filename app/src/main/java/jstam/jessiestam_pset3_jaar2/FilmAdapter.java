@@ -23,8 +23,8 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
     private String currentColor;
 
     //ArrayList<ArrayList> titles_posters;
-    ArrayList<String> titles;
-    ArrayList<String> posters;
+    private ArrayList<String> titles;
+    private ArrayList<String> posters;
 
     public FilmAdapter(ArrayList<String> titles, ArrayList<String> posters) {
 
