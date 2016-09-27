@@ -1,7 +1,5 @@
 package jstam.jessiestam_pset3_jaar2;
 
-import android.util.Log;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,7 +8,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Created by Jessie on 22/09/2016.
+ * Watch List - HttpRequestHelper
+ * Jessie Stam
+ * 10560599
+ *
+ * This activity creates a URL using the film title chosen by the user and starts and internet
+ * connection to fetch the film data. Returns a result String that is parsed in TitleAsyncTask.
  */
 
 public class HttpRequestHelper {
@@ -19,21 +22,19 @@ public class HttpRequestHelper {
     private static final String url1 = "http://www.omdbapi.com/?t=";
     private static final String url2 = "&plot=short&r=json";
 
-    /*
+    /**
      * Downloads information from the server and puts it into a string object.
      */
     protected static synchronized String downloadFromServer(String... params) {
 
-        // create result String
+        // create result String and film title String
         String result = "";
         String film = params[0];
 
+        // replace spaces with + sign to make URL work
         String film_title = film.replaceAll(" ", "+");
 
-        Log.d("findproblem3", film_title);
-
         // complete URL string and turn into URL
-        //String complete_URL_string = url1 + film_title + url2;
         String complete_URL_string = url1 + film_title + url2;
         URL complete_URL = null;
 
@@ -43,7 +44,7 @@ public class HttpRequestHelper {
             e.printStackTrace();
         }
 
-        // make the connection
+        // make internet connection
         HttpURLConnection connection;
         if (complete_URL != null) {
             try {
@@ -55,7 +56,7 @@ public class HttpRequestHelper {
                 // get response code
                 Integer responce_code = connection.getResponseCode();
 
-                // if 200-300, read inputstream
+                // if 200-300, read input stream
                 if (200 <= responce_code && responce_code <= 299) {
                     BufferedReader bufferedReader = new BufferedReader
                             (new InputStreamReader(connection.getInputStream()));
@@ -64,7 +65,7 @@ public class HttpRequestHelper {
                         result = result + line;
                     }
                 }
-                // when error occures, read errorstream
+                // when error occurs, read error stream
                 else {
                     BufferedReader bufferedReader = new BufferedReader
                             (new InputStreamReader(connection.getErrorStream()));

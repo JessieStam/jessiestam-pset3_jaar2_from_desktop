@@ -15,8 +15,8 @@ import java.util.ArrayList;
  * Jessie Stam
  * 10560599
  *
- * This acitivity displays film information for film chosen by user and gives film title and poster
- * back to Main Acitivity so they can be added to the Watch List.
+ * This activity displays film information for film chosen by user and gives film title and poster
+ * back to Main Activity so they can be added to the Watch List.
  */
 
 public class SecondActivity extends MainActivity{
@@ -103,11 +103,13 @@ public class SecondActivity extends MainActivity{
         }
     }
 
-
+    /**
+     * When button is clicked, start Main Activity and add title and poster to be added to Watch
+     * List, along with the list of films already added to the Watch List
+     */
     public void addRemove(View view) {
 
-        // save image and title to mainactivity and add to recyclerview there
-        // move to second Activity
+        // move to second Activity and add extras
         Intent addRemove = new Intent(this, MainActivity.class);
 
         // move extras to SecondActivity
@@ -119,6 +121,7 @@ public class SecondActivity extends MainActivity{
 
         startActivity(addRemove);
 
+        // finish this activity
         finish();
     }
 }

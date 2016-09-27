@@ -1,7 +1,5 @@
 package jstam.jessiestam_pset3_jaar2;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,34 +13,40 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 /**
- * Created by Jessie on 22/09/2016.
+ * Watch List - FilmAdapter
+ * Jessie Stam
+ * 10560599
+ *
+ * This adapter is used on a RecyclerView to update it. It also allows the user to select an item in
+ * the RecyclerView and chance its color for when film has been watched, but this feature is not yet
+ * saved when the activity is killed and restored.
  */
 
 public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
 
-    //krijgt data mee (title, poster)
-
-    //ArrayList<ArrayList> titles_posters;
     private ArrayList<String> titles;
     private ArrayList<String> posters;
 
-    String currentColor = "White";
-
+    /**
+     * This function constructs the FilmAdapter
+     */
     public FilmAdapter(ArrayList<String> titles, ArrayList<String> posters) {
 
         this.titles = titles;
         this.posters = posters;
     }
 
+    // set onClickListener to RecyclerView
     View.OnClickListener listener = new View.OnClickListener() {
 
+        String currentColor = "White";
         private String unfinished = "White";
         private String finished = "Gray";
 
+        // when item is clicked, change color
         @Override
         public void onClick(View view) {
-
-        // if item is selected, change color to gray
+        // if item is selected, change color to turquoise
             if (currentColor.equals(unfinished) || currentColor == null) {
                 view.setBackgroundColor(Color.parseColor("#d4f7f4"));
                 currentColor = finished;
@@ -55,6 +59,9 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
         }
     };
 
+    /**
+     * Construct ViewHolder to display title and poster in
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView myTextView;
@@ -80,13 +87,11 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
 
         MainActivity main = new MainActivity();
 
+        // add film title and poster to RecyclerView and resize poster
         viewHolder.myTextView.setText(titles.get(position));
-
-        Bitmap poster = BitmapFactory.decodeFile(posters.get(position));
-        viewHolder.myImageView.setImageBitmap(poster);
-
         Picasso.with(main).load(posters.get(position)).resize(100, 148).into(viewHolder.myImageView);
 
+        // set listener to allow for selecting item and changing color
         viewHolder.itemView.setOnClickListener(listener);
     }
 

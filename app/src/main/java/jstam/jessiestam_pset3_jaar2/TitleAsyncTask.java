@@ -9,7 +9,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- * Created by Jessie on 22/09/2016.
+ * Watch List - TitleAsyncTask
+ * Jessie Stam
+ * 10560599
+ *
+ * Gets result String from HttpRequestHelper and parses it as JSONObject to extract film title,
+ * year, director, actors, summary and poster. Extracted data is added to datalist and moved on to
+ * Second Activity's setData function that starts when datalist is completed.
  */
 
 public class TitleAsyncTask extends AsyncTask<String, Integer, String> {
@@ -18,6 +24,9 @@ public class TitleAsyncTask extends AsyncTask<String, Integer, String> {
     SecondActivity secondActivity;
     ArrayList<String> data_list;
 
+    /**
+     * Constructs TitleAsyncTask
+     */
     public TitleAsyncTask(SecondActivity activity) {
         secondActivity = activity;
         context = this.secondActivity.getApplicationContext();
@@ -33,9 +42,6 @@ public class TitleAsyncTask extends AsyncTask<String, Integer, String> {
     // download the data
     @Override
     protected String doInBackground(String... params) {
-
-        //String title = params[0];
-        // Log.d("findproblem4", params[0]);
         return HttpRequestHelper.downloadFromServer(params);
     }
 
@@ -51,6 +57,7 @@ public class TitleAsyncTask extends AsyncTask<String, Integer, String> {
             else {
                 Toast.makeText(context, "Data was found", Toast.LENGTH_SHORT).show();
 
+                // create new datalist
                 data_list = new ArrayList<>();
 
                 try {
@@ -76,10 +83,12 @@ public class TitleAsyncTask extends AsyncTask<String, Integer, String> {
                     e.printStackTrace();
                 }
 
+                // if film is not found, let user know
                 if (data_list.size() == 0) {
                     Toast.makeText(context, "but your film was not...", Toast.LENGTH_SHORT).show();
                 }
 
+                // start Second Activity's setData function to display the data
                 this.secondActivity.setData(data_list);
             }
     }

@@ -20,6 +20,7 @@ import java.util.ArrayList;
  * Activity to display film information. When information is returned from Second Activity it is
  * added to the RecyclerView with films that the user still wants to see.
  */
+
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView moviesList;
