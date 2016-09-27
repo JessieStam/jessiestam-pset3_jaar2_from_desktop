@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 /**
@@ -20,11 +22,11 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
 
     //krijgt data mee (title, poster)
 
-    private String currentColor;
-
     //ArrayList<ArrayList> titles_posters;
     private ArrayList<String> titles;
     private ArrayList<String> posters;
+
+    String currentColor = "White";
 
     public FilmAdapter(ArrayList<String> titles, ArrayList<String> posters) {
 
@@ -40,9 +42,9 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
         @Override
         public void onClick(View view) {
 
-            // if item is selected, change color to gray
+        // if item is selected, change color to gray
             if (currentColor.equals(unfinished) || currentColor == null) {
-                view.setBackgroundColor(Color.GRAY);
+                view.setBackgroundColor(Color.parseColor("#d4f7f4"));
                 currentColor = finished;
             }
             // if item is not selected, change color back to white
@@ -76,10 +78,14 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
 
+        MainActivity main = new MainActivity();
+
         viewHolder.myTextView.setText(titles.get(position));
 
         Bitmap poster = BitmapFactory.decodeFile(posters.get(position));
         viewHolder.myImageView.setImageBitmap(poster);
+
+        Picasso.with(main).load(posters.get(position)).resize(100, 148).into(viewHolder.myImageView);
 
         viewHolder.itemView.setOnClickListener(listener);
     }

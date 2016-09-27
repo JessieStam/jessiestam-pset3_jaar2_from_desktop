@@ -10,11 +10,19 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
+/**
+ * Watch List - MainActivity
+ * Jessie Stam
+ * 10560599
+ *
+ * This application allows the user to look for movies and add them to a list of movies that they
+ * still want to watch. This Activity parses the user for a title and them moves on to Second
+ * Activity to display film information. When information is returned from Second Activity it is
+ * added to the RecyclerView with films that the user still wants to see.
+ */
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView moviesList;
-    // adapter object
-    // layoutmanager object
     EditText title_input;
     String title_string;
     String title;
@@ -31,52 +39,61 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // create RecyclerView item and EditText item
         moviesList = (RecyclerView) findViewById(R.id.movies_list);
+        title_input = (EditText) findViewById(R.id.user_search_input);
 
-        titles = new ArrayList<>();
-        posters = new ArrayList<>();
-
+        // if savedInstanceState is empty, create new list objects from titles and posters
         if (savedInstanceState == null) {
-
-            title_input = (EditText) findViewById(R.id.user_search_input);
-
+            // create new titles and posters list
+            titles = new ArrayList<>();
+            posters = new ArrayList<>();
         }
+        // if savedInstanceState is not empty, restore lists
         else {
-
-            Bundle extras = getIntent().getExtras();
-            title = extras.getString("title");
-            poster = extras.getString("poster");
-
+            // restore titles and posters lists
             titles = savedInstanceState.getStringArrayList("titles");
             posters = savedInstanceState.getStringArrayList("posters");
-
-            // add title and poster from second activity to list
-//            if (poster != null && title != null) {
-//                posters.add(poster);
-//                titles.add(title);
-//            }
         }
 
-        // use a linear layout manager
+        // get extras from SecondActivity
+        Bundle extras = getIntent().getExtras();
+
+        // if extras exist, update title and poster string and titles and posters lists
+        if (extras != null) {
+            title = extras.getString("title");
+            poster = extras.getString("poster");
+            titles = extras.getStringArrayList("title_list");
+            posters = extras.getStringArrayList("poster_list");
+
+        }
+
+        // use a linear layout manager on RecyclerView
         manager = new LinearLayoutManager(this);
         moviesList.setLayoutManager(manager);
 
-        // specify an adapter (see also next example)
+        // create new FilmAdapter object and set to RecyclerView
         adapter = new FilmAdapter(titles, posters);
+
         moviesList.setAdapter(adapter);
 
+        // update RecyclerView
         editRecyclerView();
     }
 
+    /**
+     * Gets title string from the user and moves to Second Activity to search for that film
+     */
     public void searchFilm(View viewSearchFilm) {
 
+        // get title string from user input
         title_string = title_input.getText().toString();
 
-        // move to second Activity
+        // move to second Activity and add extras
         Intent searchTitle = new Intent(this, SecondActivity.class);
-
-        // move extras to SecondActivity
         searchTitle.putExtra("title", title_string);
+        searchTitle.putExtra("title_list", titles);
+        searchTitle.putExtra("poster_list", posters);
 
         startActivity(searchTitle);
 
@@ -84,21 +101,11 @@ public class MainActivity extends AppCompatActivity {
         title_input.getText().clear();
     }
 
-    public void editRecyclerView() {
-
-        if (poster != null && title != null) {
-            titles.add(title);
-            posters.add(poster);
-        }
-
-        adapter.notifyDataSetChanged();
-    }
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        // save lists object
+        // save list objects
         outState.putStringArrayList("titles", titles);
         outState.putStringArrayList("posters", posters);
     }
@@ -107,9 +114,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        // restore story object
-        //story = (Story) savedInstanceState.getSerializable("story");
+        // restore list objects
         titles = savedInstanceState.getStringArrayList("titles");
         posters = savedInstanceState.getStringArrayList("posters");
+    }
+
+    /**
+     * Adds a new film to the RecyclerView
+     */
+    public void editRecyclerView() {
+
+        // check is titles and posters lists exist and add title and poster
+        if (titles != null && posters != null && title != null && poster != null) {
+            titles.add(title);
+            posters.add(poster);
+        }
+
+        // update RecyclerView
+        adapter.notifyDataSetChanged();
     }
 }
